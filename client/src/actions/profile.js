@@ -2,6 +2,7 @@ import api from '../utils/api';
 import { setAlert } from './alert';
 import {
   GET_PROFILE,
+  GET_REPOS,
   GET_PROFILES,
   UPDATE_PROFILE,
   PROFILE_ERROR,
@@ -159,6 +160,38 @@ export const getProfiles = () => async (dispatch) => {
 
     dispatch({
       type: GET_PROFILES,
+      payload: res.data
+    });
+  } catch (error) {
+    const errors = error.response.data.errors;
+    if (errors) {
+      errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
+    }
+  }
+};
+
+export const getProfileById = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/api/profile/user/${id}`);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    });
+  } catch (error) {
+    const errors = error.response.data.errors;
+    if (errors) {
+      errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
+    }
+  }
+};
+
+export const getGithubRepos = (username) => async (dispatch) => {
+  try {
+    const res = await api.get(`/api/profile/github/${username}`);
+
+    dispatch({
+      type: GET_REPOS,
       payload: res.data
     });
   } catch (error) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ProfilesItem = ({
   profile: {
@@ -6,7 +7,7 @@ const ProfilesItem = ({
     company,
     location,
     skills,
-    user: { name, avatar }
+    user: { _id, name, avatar }
   }
 }) => {
   return (
@@ -18,9 +19,9 @@ const ProfilesItem = ({
           {status} {company && ` at ${company}`}
         </p>
         <p>{location}</p>
-        <a href='profile.html' className='btn btn-primary'>
+        <Link to={`/profile/${_id}`} className='btn btn-primary'>
           View Profile
-        </a>
+        </Link>
       </div>
 
       <ul>

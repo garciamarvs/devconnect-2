@@ -346,7 +346,9 @@ router.get('/github/:username', async (req, res) => {
     const repos = await axios.get(url);
 
     if (repos.status !== 200) {
-      return res.status(400).json({ msg: 'No Github Repos Found' });
+      return res
+        .status(400)
+        .json({ errors: [{ msg: 'No Github Repos Found' }] });
     }
 
     res.json(repos.data);
