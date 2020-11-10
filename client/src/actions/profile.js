@@ -155,6 +155,8 @@ export const deleteAccount = () => async (dispatch) => {
 };
 
 export const getProfiles = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+
   try {
     const res = await api.get('/api/profile');
 

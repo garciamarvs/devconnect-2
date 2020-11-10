@@ -17,7 +17,7 @@ const ProfileTop = ({
       <p className='lead'>
         {status} {company && ` at ${company}`}
       </p>
-      <p>{location}</p>
+      {location && <p>{location}</p>}
       <div className='icons my-1'>
         {website && (
           <a href={website} target='_blank' rel='noopener noreferrer'>

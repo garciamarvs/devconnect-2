@@ -31,7 +31,7 @@ const ProfileEducation = ({ education }) => {
               </p>
             </div>
           ))
-        : 'No experience yet.'}
+        : 'No education yet.'}
     </div>
   );
 };
