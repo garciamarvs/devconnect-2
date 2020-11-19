@@ -14,6 +14,7 @@ import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
+import ScrollToTop from './utils/ScrollToTop';
 import './App.css';
 
 //Redux
