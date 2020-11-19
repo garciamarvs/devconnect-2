@@ -3,7 +3,9 @@ import {
   POST_ERROR,
   UPDATE_LIKES,
   ADD_POST,
-  DELETE_POST
+  DELETE_POST,
+  GET_POST,
+  ADD_COMMENT
 } from '../actions/types';
 
 const initialState = {
@@ -17,6 +19,13 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case GET_POST:
+      return {
+        ...state,
+        post: payload,
+        loading: false
+      };
+
     case GET_POSTS:
       return {
         ...state,
@@ -44,6 +53,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         posts: state.posts.filter((post) => post._id !== payload),
+        loading: false
+      };
+
+    case ADD_COMMENT:
+      return {
+        ...state,
+        post: { ...state.post, comments: payload },
         loading: false
       };
 

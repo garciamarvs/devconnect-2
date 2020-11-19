@@ -3,7 +3,9 @@ import {
   UPDATE_LIKES,
   ADD_POST,
   DELETE_POST,
-  POST_ERROR
+  POST_ERROR,
+  GET_POST,
+  ADD_COMMENT
 } from './types';
 import { setAlert } from './alert';
 import api from '../utils/api';
@@ -14,6 +16,24 @@ export const getPosts = () => async (dispatch) => {
 
     dispatch({
       type: GET_POSTS,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: [
+        { msg: error.response.statusText, status: error.response.status }
+      ]
+    });
+  }
+};
+
+export const getPostById = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/api/posts/${id}`);
+
+    dispatch({
+      type: GET_POST,
       payload: res.data
     });
   } catch (error) {
@@ -92,6 +112,22 @@ export const deletePost = (id) => async (dispatch) => {
       if (errors) {
         errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
       }
+    }
+  }
+};
+
+export const addComment = (id, text) => async (dispatch) => {
+  try {
+    const res = await api.post(`/api/posts/${id}/comments`, text);
+
+    dispatch({
+      type: ADD_COMMENT,
+      payload: res.data
+    });
+  } catch (error) {
+    const errors = error.response.data.errors;
+    if (errors) {
+      errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
     }
   }
 };
