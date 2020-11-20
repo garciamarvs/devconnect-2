@@ -5,7 +5,8 @@ import {
   DELETE_POST,
   POST_ERROR,
   GET_POST,
-  ADD_COMMENT
+  ADD_COMMENT,
+  DELETE_COMMENT
 } from './types';
 import { setAlert } from './alert';
 import api from '../utils/api';
@@ -55,10 +56,12 @@ export const likePost = (id) => async (dispatch) => {
       payload: { id, likes: res.data }
     });
   } catch (error) {
-    const errors = error.response.data.errors;
-    if (errors) {
-      errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
-    }
+    dispatch({
+      type: POST_ERROR,
+      payload: [
+        { msg: error.response.statusText, status: error.response.status }
+      ]
+    });
   }
 };
 
@@ -71,10 +74,12 @@ export const unlikePost = (id) => async (dispatch) => {
       payload: { id, likes: res.data }
     });
   } catch (error) {
-    const errors = error.response.data.errors;
-    if (errors) {
-      errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
-    }
+    dispatch({
+      type: POST_ERROR,
+      payload: [
+        { msg: error.response.statusText, status: error.response.status }
+      ]
+    });
   }
 };
 
@@ -106,12 +111,14 @@ export const deletePost = (id) => async (dispatch) => {
         payload: id
       });
 
-      dispatch(setAlert('Post Deleted', '-success'));
+      dispatch(setAlert('Post Deleted', '-danger'));
     } catch (error) {
-      const errors = error.response.data.errors;
-      if (errors) {
-        errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
-      }
+      dispatch({
+        type: POST_ERROR,
+        payload: [
+          { msg: error.response.statusText, status: error.response.status }
+        ]
+      });
     }
   }
 };
@@ -128,6 +135,28 @@ export const addComment = (id, text) => async (dispatch) => {
     const errors = error.response.data.errors;
     if (errors) {
       errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
+    }
+  }
+};
+
+export const deleteComment = (id, cid) => async (dispatch) => {
+  if (window.confirm('Do you want to delete this comment?')) {
+    try {
+      await api.delete(`/api/posts/${id}/comments/${cid}`);
+
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: cid
+      });
+
+      dispatch(setAlert('Comment Deleted', '-danger'));
+    } catch (error) {
+      dispatch({
+        type: POST_ERROR,
+        payload: [
+          { msg: error.response.statusText, status: error.response.status }
+        ]
+      });
     }
   }
 };

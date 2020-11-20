@@ -21,7 +21,9 @@ export const getCurrentProfile = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
-      payload: error.response.data.errors
+      payload: [
+        { msg: error.response.statusText, status: error.response.status }
+      ]
     });
   }
 };
@@ -165,10 +167,12 @@ export const getProfiles = () => async (dispatch) => {
       payload: res.data
     });
   } catch (error) {
-    const errors = error.response.data.errors;
-    if (errors) {
-      errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
-    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: [
+        { msg: error.response.statusText, status: error.response.status }
+      ]
+    });
   }
 };
 
@@ -181,10 +185,12 @@ export const getProfileById = (id) => async (dispatch) => {
       payload: res.data
     });
   } catch (error) {
-    const errors = error.response.data.errors;
-    if (errors) {
-      errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
-    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: [
+        { msg: error.response.statusText, status: error.response.status }
+      ]
+    });
   }
 };
 
@@ -197,9 +203,11 @@ export const getGithubRepos = (username) => async (dispatch) => {
       payload: res.data
     });
   } catch (error) {
-    const errors = error.response.data.errors;
-    if (errors) {
-      errors.forEach((err) => dispatch(setAlert(err.msg, '-danger')));
-    }
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: [
+        { msg: error.response.statusText, status: error.response.status }
+      ]
+    });
   }
 };

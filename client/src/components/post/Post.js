@@ -12,7 +12,7 @@ const Post = ({ post: { post, loading }, match, getPostById }) => {
     getPostById(match.params.id);
   }, [getPostById, match.params.id]);
 
-  return post == null ? (
+  return loading || post == null ? (
     <Spinner />
   ) : (
     <Fragment>
@@ -35,7 +35,7 @@ const Post = ({ post: { post, loading }, match, getPostById }) => {
 
       <div className='comments'>
         {post.comments.map((comment) => (
-          <PostComment key={comment._id} comment={comment} />
+          <PostComment key={comment._id} post={post._id} comment={comment} />
         ))}
       </div>
     </Fragment>
