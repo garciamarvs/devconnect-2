@@ -18,7 +18,7 @@ const Dashboard = ({
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return loading ? (
+  return loading || profile == null ? (
     <Spinner />
   ) : (
     <Fragment>
@@ -26,14 +26,7 @@ const Dashboard = ({
       <p className='lead'>
         <i className='fas fa-user'></i> Welcome {user && user.name}
       </p>
-      {profile == null ? (
-        <Fragment>
-          <p>You have not yet setup a profile, please add some info.</p>
-          <Link to='/profile' className='btn btn-primary my-1'>
-            Create Profile
-          </Link>
-        </Fragment>
-      ) : (
+      {profile != null ? (
         <Fragment>
           <DashboardActions />
           <Experience />
@@ -44,6 +37,13 @@ const Dashboard = ({
               <i className='fas fa-user-minus'></i> Delete My Account
             </button>
           </div>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <p>You have not yet setup a profile, please add some info.</p>
+          <Link to='/profile' className='btn btn-primary my-1'>
+            Create Profile
+          </Link>
         </Fragment>
       )}
     </Fragment>
