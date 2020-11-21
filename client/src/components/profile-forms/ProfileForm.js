@@ -67,7 +67,7 @@ const CreateProfile = ({
       profileData.skills = profile.skills.join(', ');
       setFormData(profileData);
     }
-  }, [loading, getCurrentProfile, profile]);
+  }, [getCurrentProfile, profile]);
 
   return loading ? (
     <Spinner />
