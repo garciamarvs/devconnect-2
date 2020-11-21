@@ -27,7 +27,7 @@ const App = () => {
       <Router>
         <ScrollToTop />
         <Fragment>
-          <Navbar></Navbar>
+          <Navbar />
           <Switch>
             <Route exact path='/' component={Landing}></Route>
             <Route component={Routes}></Route>

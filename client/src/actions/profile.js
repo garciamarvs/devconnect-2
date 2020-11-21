@@ -7,11 +7,16 @@ import {
   UPDATE_PROFILE,
   PROFILE_ERROR,
   CLEAR_PROFILE,
-  ACCOUNT_DELETED
+  ACCOUNT_DELETED,
+  SET_LOADING_PROFILE
 } from './types';
 
 export const getCurrentProfile = () => async (dispatch) => {
   try {
+    dispatch({
+      type: SET_LOADING_PROFILE
+    });
+
     const res = await api.get('/api/profile/me');
 
     dispatch({
@@ -157,8 +162,6 @@ export const deleteAccount = () => async (dispatch) => {
 };
 
 export const getProfiles = () => async (dispatch) => {
-  dispatch({ type: CLEAR_PROFILE });
-
   try {
     const res = await api.get('/api/profile');
 
@@ -178,6 +181,10 @@ export const getProfiles = () => async (dispatch) => {
 
 export const getProfileById = (id) => async (dispatch) => {
   try {
+    dispatch({
+      type: SET_LOADING_PROFILE
+    });
+
     const res = await api.get(`/api/profile/user/${id}`);
 
     dispatch({
